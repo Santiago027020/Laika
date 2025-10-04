@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #f8f9fa;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "lightblue", "font": {"color": "black"}, "id": "Mitigation and use of biofilms in space for the benefit of human space exploration", "label": "Mitigation and use of biofilms in space for the benefit of human space exploration", "shape": "dot", "title": "The text highlights the crucial importance of microbiology for the success and sustainability of future long-duration human space missions to the Moon and Mars. It explains that while microbes can pose risks such as biofilm formation and increased pathogenicity that affect astronaut health and the integrity of spacecraft, they also offer vital solutions. These include their application in bioregenerative life support systems for plant cultivation, water treatment, and atmospheric revitalization, as well as in situ resource utilization (bISRU) to improve soil fertility, act as radiation shields, generate electricity, and create plant habitats. The ability of microbes to adapt and genetically modify themselves is critical to human self-sufficiency in deep space, making it imperative to understand and manage both their benefits and limitations."}, {"color": "lightgreen", "font": {"color": "black"}, "id": "mitigation and use biofilms space for", "label": "mitigation and use biofilms space for", "shape": "dot"}, {"color": "lightblue", "font": {"color": "black"}, "id": "Spatial Characterization of Microbial Communities on Multi-Species Leafy Greens Grown Simultaneously in the Vegetable Production Systems on the International Space Station", "label": "Spatial Characterization of Microbial Communities on Multi-Species Leafy Greens Grown Simultaneously in the Vegetable Production Systems on the International Space Station", "shape": "dot", "title": "This study focuses on establishing continuous crop production for deep space missions, vital for crew nutritional and psychological benefits. Three technology demonstrations (VEG-03D, E, and F) were completed on the International Space Station (ISS) using two Veggie Units, achieving simultaneous growth of multiple leafy green plant species, such as lettuce and mizuna, and concurrent use of the units. Microbiological characterization of leaves, roots, growth pad components, and Veggie Chamber surfaces confirmed that the plants were safe for consumption and revealed low counts of bacteria and fungi on the surfaces, commonly isolated on the ISS. Microbial community analysis showed greater diversity in the roots and substrate than in the leaves and wick. This work provides crucial information for research into food production on the ISS and the impact of the plant microbiome in this unique, closed environment, highlighting the importance of controlling conditions to avoid microbial risks, as observed in previous incidents with opportunistic fungi. The experiments demonstrated a mixed-crop approach with continuous harvests to maximize crew production."}, {"color": "lightgreen", "font": {"color": "black"}, "id": "spatial", "label": "spatial", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "characterization", "label": "characterization", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "microbial", "label": "microbial", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "communities", "label": "communities", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "multi species", "label": "multi species", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "leafy", "label": "leafy", "shape": "dot"}, {"color": "lightblue", "font": {"color": "black"}, "id": "Microbiome metadata standards: Report of the National Microbiome Data Collaborative\u0027s workshop and follow-on activities.", "label": "Microbiome metadata standards: Report of the National Microbiome Data Collaborative\u0027s workshop and follow-on activities.", "shape": "dot", "title": "This text is a correction to a scientific article entitled \"Microbiome metadata standards: report of the National Microbiome Data Collaborative\u0027s workshop and follow-on activities\" by Vangay et al., published in the journal mSystems. The correction specifies how the article\u0027s authorship and affiliation should be read. This is an open access article under a Creative Commons license, provided by the American Society for Microbiology (ASM) and hosted on an official U.S. government website."}, {"color": "lightgreen", "font": {"color": "black"}, "id": "microbiome", "label": "microbiome", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "metadata", "label": "metadata", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "standards", "label": "standards", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "report", "label": "report", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "national", "label": "national", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "data", "label": "data", "shape": "dot"}, {"color": "lightblue", "font": {"color": "black"}, "id": "Editorial: Revisiting the limits of plant life - plant adaptations to extreme terrestrial environments relating to astrobiology and space biology.", "label": "Editorial: Revisiting the limits of plant life - plant adaptations to extreme terrestrial environments relating to astrobiology and space biology.", "shape": "dot", "title": "The text summarizes research exploring the adaptations of terrestrial plants to extreme environments for application in space exploration and the search for extraterrestrial life. The studies presented cover the potential of plants to mitigate cosmic radiation in manned missions, the improvement of crop yields in simulated space conditions through co-cultivation with desert endophytic fungi, and the factors influencing seed germination in extraterrestrial regolith, highlighting the importance of porosity and low compaction. Furthermore, it is demonstrated that cyanobacteria can perform oxygenic photosynthesis under the light spectrum of M dwarf stars, which is crucial for the search for oxygen biosignatures on exoplanets. Together, these investigations seek to advance the selection and genetic improvement of plants for critical functions in space missions and guide the detection of life beyond Earth."}, {"color": "lightgreen", "font": {"color": "black"}, "id": "editorial", "label": "editorial", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "revisiting", "label": "revisiting", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "limits", "label": "limits", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "plant", "label": "plant", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "life", "label": "life", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "adaptations", "label": "adaptations", "shape": "dot"}, {"color": "lightblue", "font": {"color": "black"}, "id": "Response of Arabidopsis thaliana and Mizuna mustard seeds to simulated space radiation exposures.", "label": "Response of Arabidopsis thaliana and Mizuna mustard seeds to simulated space radiation exposures.", "shape": "dot", "title": "This study investigates the impact of space radiation from solar particle events (SPE) and galactic cosmic rays (GCR) on plant seeds, a critical factor for long-duration crewed missions to the Moon and Mars. Fresh food production in space could provide nutritional and psychological benefits, but the effects of radiation on plants have not been sufficiently investigated. The study evaluated dried and hydrated seeds of the model plant *Arabidopsis thaliana* and the mustard crop plant Mizuna, exposing them to GCR and SPE simulations with various particles and doses at NASA\u0027s Space Radiation Laboratory. The results showed that hydrated Arabidopsis seeds exhibited dose- and quality-dependent responses to radiation, with heavier ions causing more severe damage. The observed damage varied by seed type, highlighting the need for specific research for space crops and the importance of understanding the viability of fresh food production in deep radiation environments."}, {"color": "lightgreen", "font": {"color": "black"}, "id": "response arabidopsis thaliana and mizuna mustard", "label": "response arabidopsis thaliana and mizuna mustard", "shape": "dot"}, {"color": "lightblue", "font": {"color": "black"}, "id": "Competitive Growth Assay of Mutagenized Chlamydomonas reinhardtii Compatible With the International Space Station Veggie Plant Growth Chamber.", "label": "Competitive Growth Assay of Mutagenized Chlamydomonas reinhardtii Compatible With the International Space Station Veggie Plant Growth Chamber.", "shape": "dot", "title": "This article investigates the use of microalgae, specifically *Chlamydomonas reinhardtii*, in biological life support systems for spaceflight, with the goal of recycling carbon dioxide and generating useful organic compounds. To this end, a method was developed to cultivate these algae in breathable plastic tissue culture bags within the Veggie growth chamber of the International Space Station (ISS), overcoming the challenge of liquid handling in microgravity. Using ultraviolet C (UVC) mutagenesis, competitive growth assays, and genome sequencing, genes with mutations indicative of positive selection were identified, enriched in information processing functions related to DNA repair, RNA processing, translation, cytoskeletal motors, kinases, and ABC transporters. These data suggest that modifying DNA repair, signal transduction, and metabolite transport may be necessary to improve growth rates in this spatial production system."}, {"color": "lightgreen", "font": {"color": "black"}, "id": "competitive", "label": "competitive", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "growth", "label": "growth", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "assay", "label": "assay", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "mutagenized", "label": "mutagenized", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "chlamydomonas", "label": "chlamydomonas", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "reinhardtii", "label": "reinhardtii", "shape": "dot"}, {"color": "lightblue", "font": {"color": "black"}, "id": "Biofilm formation of Pseudomonas aeruginosa in spaceflight is minimized on lubricant impregnated surfaces.", "label": "Biofilm formation of Pseudomonas aeruginosa in spaceflight is minimized on lubricant impregnated surfaces.", "shape": "dot", "title": "The Space Biofilms project investigated the formation of *Pseudomonas aeruginosa* bacterial biofilms in microgravity, given the risk they pose to spacecraft systems and astronaut health. Biofilm growth was compared on stainless steel (SS) surfaces and lubricant-impregnated surfaces (LIS). The results showed that biofilms in microgravity are less robust than on Earth. Furthermore, LIS significantly inhibit biofilm formation compared to SS, and this effect is even more pronounced in space, making them a promising strategy for biofilm control in the space environment."}, {"color": "lightgreen", "font": {"color": "black"}, "id": "biofilm formation", "label": "biofilm formation", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "pseudomonas aeruginosa", "label": "pseudomonas aeruginosa", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "spaceflight", "label": "spaceflight", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "minimized", "label": "minimized", "shape": "dot"}, {"color": "lightblue", "font": {"color": "black"}, "id": "Advances in Space Microbiology", "label": "Advances in Space Microbiology", "shape": "dot", "title": "This text highlights the importance of Major Histocompatibility Complex (MHC) genetic diversity for infectious disease resistance and the evolutionary fitness of wild populations. It explores how factors such as parasite-mediated selection, genetic drift, and sexual selection shape these patterns, noting that MHC diversity is typically lower at geographic margins or at high latitudes and altitudes. It emphasizes that lower immunogenetic diversity poses a threat to wildlife resilience in the face of climate change and novel parasites. It proposes integrating immunogenetic data with environmental and parasitic information for effective conservation and to better understand host-parasite coevolution."}, {"color": "lightgreen", "font": {"color": "black"}, "id": "advances", "label": "advances", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "space", "label": "space", "shape": "dot"}, {"color": "lightgreen", "font": {"color": "black"}, "id": "microbiology", "label": "microbiology", "shape": "dot"}, {"color": "lightblue", "font": {"color": "black"}, "id": "Simulated micro-, lunar, and Martian gravities on Earth\u00e2\u20ac\u0161\u00c3\u201e\u00c3\u00aeeffects on Escherichia coli growth, phenotype, and sensitivity to antibiotics.", "label": "Simulated micro-, lunar, and Martian gravities on Earth\u00e2\u20ac\u0161\u00c3\u201e\u00c3\u00aeeffects on Escherichia coli growth, phenotype, and sensitivity to antibiotics.", "shape": "dot", "title": "study investigated the behavior of three Escherichia coli strains, including uropathogenic strains, under simulated microgravity, lunar, and Martian conditions on Earth using tilted clinostats. The research evaluated growth dynamics, phenotypic changes, and antibiotic sensitivity. The results indicated increased growth for some strains in simulated microgravity and lunar gravity, and the need for higher antibiotic concentrations under simulated lunar gravity compared to microgravity and Martian conditions. Although the environments created by clinostats are suggestive and not identical to actual space conditions, this approach lays a foundation for understanding microbial processes relevant to human health and exploration on lunar and Martian surfaces."}, {"color": "lightgreen", "font": {"color": "black"}, "id": "simulated micro lunar and martian gravities", "label": "simulated micro lunar and martian gravities", "shape": "dot"}, {"color": "lightblue", "font": {"color": "black"}, "id": "CubeSats for microbiology and astrobiology research", "label": "CubeSats for microbiology and astrobiology research", "shape": "dot", "title": "Space experiments are crucial for research in astrobiology and astrochemistry, complementing the work of the International Space Station and utilizing future platforms such as CubeSats and the Lunar Orbital Gateway. The European Space Agency has identified key topics such as the origin of life, habitability, and signs of life, highlighting that the complex space environment (radiation, vacuum, microgravity) cannot be fully simulated on Earth. These studies are essential for understanding the survival and adaptation of organisms and biomolecules, supporting space exploration, ensuring planetary protection, and searching for life and biosignatures beyond our planet."}, {"color": "lightgreen", "font": {"color": "black"}, "id": "cubesats for microbiology and astrobiology research", "label": "cubesats for microbiology and astrobiology research", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"from": "Mitigation and use of biofilms in space for the benefit of human space exploration", "to": "mitigation and use biofilms space for"}, {"from": "Spatial Characterization of Microbial Communities on Multi-Species Leafy Greens Grown Simultaneously in the Vegetable Production Systems on the International Space Station", "to": "spatial"}, {"from": "Spatial Characterization of Microbial Communities on Multi-Species Leafy Greens Grown Simultaneously in the Vegetable Production Systems on the International Space Station", "to": "characterization"}, {"from": "Spatial Characterization of Microbial Communities on Multi-Species Leafy Greens Grown Simultaneously in the Vegetable Production Systems on the International Space Station", "to": "microbial"}, {"from": "Spatial Characterization of Microbial Communities on Multi-Species Leafy Greens Grown Simultaneously in the Vegetable Production Systems on the International Space Station", "to": "communities"}, {"from": "Spatial Characterization of Microbial Communities on Multi-Species Leafy Greens Grown Simultaneously in the Vegetable Production Systems on the International Space Station", "to": "multi species"}, {"from": "Spatial Characterization of Microbial Communities on Multi-Species Leafy Greens Grown Simultaneously in the Vegetable Production Systems on the International Space Station", "to": "leafy"}, {"from": "Microbiome metadata standards: Report of the National Microbiome Data Collaborative\u0027s workshop and follow-on activities.", "to": "microbiome"}, {"from": "Microbiome metadata standards: Report of the National Microbiome Data Collaborative\u0027s workshop and follow-on activities.", "to": "metadata"}, {"from": "Microbiome metadata standards: Report of the National Microbiome Data Collaborative\u0027s workshop and follow-on activities.", "to": "standards"}, {"from": "Microbiome metadata standards: Report of the National Microbiome Data Collaborative\u0027s workshop and follow-on activities.", "to": "report"}, {"from": "Microbiome metadata standards: Report of the National Microbiome Data Collaborative\u0027s workshop and follow-on activities.", "to": "national"}, {"from": "Microbiome metadata standards: Report of the National Microbiome Data Collaborative\u0027s workshop and follow-on activities.", "to": "data"}, {"from": "Editorial: Revisiting the limits of plant life - plant adaptations to extreme terrestrial environments relating to astrobiology and space biology.", "to": "editorial"}, {"from": "Editorial: Revisiting the limits of plant life - plant adaptations to extreme terrestrial environments relating to astrobiology and space biology.", "to": "revisiting"}, {"from": "Editorial: Revisiting the limits of plant life - plant adaptations to extreme terrestrial environments relating to astrobiology and space biology.", "to": "limits"}, {"from": "Editorial: Revisiting the limits of plant life - plant adaptations to extreme terrestrial environments relating to astrobiology and space biology.", "to": "plant"}, {"from": "Editorial: Revisiting the limits of plant life - plant adaptations to extreme terrestrial environments relating to astrobiology and space biology.", "to": "life"}, {"from": "Editorial: Revisiting the limits of plant life - plant adaptations to extreme terrestrial environments relating to astrobiology and space biology.", "to": "adaptations"}, {"from": "Response of Arabidopsis thaliana and Mizuna mustard seeds to simulated space radiation exposures.", "to": "response arabidopsis thaliana and mizuna mustard"}, {"from": "Competitive Growth Assay of Mutagenized Chlamydomonas reinhardtii Compatible With the International Space Station Veggie Plant Growth Chamber.", "to": "competitive"}, {"from": "Competitive Growth Assay of Mutagenized Chlamydomonas reinhardtii Compatible With the International Space Station Veggie Plant Growth Chamber.", "to": "growth"}, {"from": "Competitive Growth Assay of Mutagenized Chlamydomonas reinhardtii Compatible With the International Space Station Veggie Plant Growth Chamber.", "to": "assay"}, {"from": "Competitive Growth Assay of Mutagenized Chlamydomonas reinhardtii Compatible With the International Space Station Veggie Plant Growth Chamber.", "to": "mutagenized"}, {"from": "Competitive Growth Assay of Mutagenized Chlamydomonas reinhardtii Compatible With the International Space Station Veggie Plant Growth Chamber.", "to": "chlamydomonas"}, {"from": "Competitive Growth Assay of Mutagenized Chlamydomonas reinhardtii Compatible With the International Space Station Veggie Plant Growth Chamber.", "to": "reinhardtii"}, {"from": "Biofilm formation of Pseudomonas aeruginosa in spaceflight is minimized on lubricant impregnated surfaces.", "to": "biofilm formation"}, {"from": "Biofilm formation of Pseudomonas aeruginosa in spaceflight is minimized on lubricant impregnated surfaces.", "to": "pseudomonas aeruginosa"}, {"from": "Biofilm formation of Pseudomonas aeruginosa in spaceflight is minimized on lubricant impregnated surfaces.", "to": "spaceflight"}, {"from": "Biofilm formation of Pseudomonas aeruginosa in spaceflight is minimized on lubricant impregnated surfaces.", "to": "minimized"}, {"from": "Advances in Space Microbiology", "to": "advances"}, {"from": "Advances in Space Microbiology", "to": "space"}, {"from": "Advances in Space Microbiology", "to": "microbiology"}, {"from": "Simulated micro-, lunar, and Martian gravities on Earth\u00e2\u20ac\u0161\u00c3\u201e\u00c3\u00aeeffects on Escherichia coli growth, phenotype, and sensitivity to antibiotics.", "to": "simulated micro lunar and martian gravities"}, {"from": "CubeSats for microbiology and astrobiology research", "to": "cubesats for microbiology and astrobiology research"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

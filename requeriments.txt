@@ -8,3 +8,4 @@ pyvis
 requests
 beautifulsoup4
 google-generativeai
+gunicorn
